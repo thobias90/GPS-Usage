@@ -13,6 +13,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.stahlt.gps_usage.databinding.ActivityMainBinding
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.lang.StringBuilder
 import java.net.URL
 
 class MainActivity : AppCompatActivity(), LocationListener {
