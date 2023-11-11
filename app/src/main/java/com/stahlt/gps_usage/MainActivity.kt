@@ -113,6 +113,19 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     private fun btStaticMapOnClick() {
+        Thread {
+            val encodedUrl = "https://maps.googleapis.com/maps/api/staticmap?center=${binding.tvLatitude.text},${binding.tvLongitude.text}&zoom=15&size=400x400&key=YOUR_API_KEY"
+            val url = URL(encodedUrl)
+            val urlConnection = url.openConnection()
+
+            val inputStream = urlConnection.getInputStream()
+
+            val image = BitmapFactory.decodeStream(inputStream)
+
+            runOnUiThread {
+                binding.ivStaticMap.setImageBitmap(image)
+            }
+        }.start()
     }
     override fun onLocationChanged(location: Location) {
         binding.tvLatitude.text = location.latitude.toString()
