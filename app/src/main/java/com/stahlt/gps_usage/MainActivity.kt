@@ -89,7 +89,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 row = input.readLine()
             }
 
-            showAlert(output.toString())
+            runOnUiThread {
+                showAlert(output.toString())
+            }
         }.start()
     }
 
