@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">GPS-Usage</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="show_address">Show Address</string>
+    <string name="show_map">Show Map</string>
+    <string name="longitude">Longitude:</string>
+    <string name="latitude">Latitude:</string>
+    <string name="sem_sinal">Sem sinal</string>
 </resources>
