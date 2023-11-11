@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
             btShowMapOnClick()
         }
         binding.btAddress.setOnClickListener {
-            btnAddressOnClick()
+        binding.btStaticMap.setOnClickListener {
+            btStaticMapOnClick()
         }
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -109,6 +110,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
+    private fun btStaticMapOnClick() {
+    }
     override fun onLocationChanged(location: Location) {
         binding.tvLatitude.text = location.latitude.toString()
         binding.tvLongitude.text = location.longitude.toString()
