@@ -92,7 +92,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
             }
 
             runOnUiThread {
-                showAlert(output.toString())
+                val formattedAddress = output.substring(
+                    output.indexOf("<formatted_address>") + 19,
+                    output.indexOf("/formatted_address"))
+                showAlert(formattedAddress)
             }
         }.start()
     }
