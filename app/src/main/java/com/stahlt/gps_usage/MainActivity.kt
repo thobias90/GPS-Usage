@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btShowMap.setOnClickListener {
+            this.onClick()
+        }
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -50,6 +53,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+    }
+
+    private fun onClick() {
+
     }
 
     override fun onLocationChanged(location: Location) {
