@@ -3,16 +3,22 @@ package com.stahlt.gps_usage
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
+import com.stahlt.gps_usage.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var locationManager: LocationManager
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -34,6 +40,11 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+    }
+
+    override fun onLocationChanged(location: Location) {
+        binding.tvLatitude.text = location.latitude.toString()
+        binding.tvLongitude.text = location.longitude.toString()
     }
 }
