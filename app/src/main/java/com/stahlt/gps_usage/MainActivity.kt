@@ -7,12 +7,13 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.stahlt.gps_usage.databinding.ActivityMainBinding
+import java.net.URL
 
 class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var locationManager: LocationManager
@@ -23,7 +24,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
         setContentView(binding.root)
 
         binding.btShowMap.setOnClickListener {
-            this.onClick()
+            btShowMapOnClick()
+        }
+        binding.btAddress.setOnClickListener {
+            btnAddressOnClick()
         }
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -50,14 +54,40 @@ class MainActivity : AppCompatActivity(), LocationListener {
             return
         }
 
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            1
+        )
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
     }
 
-    private fun onClick() {
+    private fun btShowMapOnClick() {
         val intent = Intent(this, MapsActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun btnAddressOnClick() {
+        Thread(Runnable {
+            val encodedURL =
+                "https://maps.googleapis.com/maps/api/geocode/xml?latlng=${binding.tvLatitude.text},${binding.tvLongitude.text}&key=YOUR_API_KEY"
+            val url = URL(encodedURL)
+            val urlConnection = url.openConnection()
+
+            val inputString = urlConnection.getInputStream()
+
+            showAlert("R. Ituporanga, 365. 89222-430, Joinville - SC")
+        }).start()
+    }
+
+    private fun showAlert(msg: String) {
+        AlertDialog.Builder(this).apply {
+            setTitle("Address")
+            setMessage(msg)
+            setNeutralButton("OK", null)
+            show()
+        }
     }
 
     override fun onLocationChanged(location: Location) {
