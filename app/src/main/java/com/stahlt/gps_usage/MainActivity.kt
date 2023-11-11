@@ -56,7 +56,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     private fun onClick() {
-
+        val intent = Intent(this, MapsActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onLocationChanged(location: Location) {
