@@ -68,6 +68,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     private fun btShowMapOnClick() {
         val intent = Intent(this, MapsActivity::class.java)
+        intent.putExtra("latitude",binding.tvLatitude.text.toString().toDouble())
+        intent.putExtra("longitude", binding.tvLongitude.text.toString().toDouble())
         startActivity(intent)
     }
 
