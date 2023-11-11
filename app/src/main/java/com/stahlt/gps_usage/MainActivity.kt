@@ -2,12 +2,14 @@ package com.stahlt.gps_usage
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.stahlt.gps_usage.databinding.ActivityMainBinding
@@ -21,6 +23,11 @@ class MainActivity : AppCompatActivity(), LocationListener {
         setContentView(binding.root)
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivity(intent)
+        }
 
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -39,6 +46,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
             // for ActivityCompat#requestPermissions for more details.
             return
         }
+
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
     }
