@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
             btShowMapOnClick()
         }
         binding.btAddress.setOnClickListener {
+            btAddressOnClick()
+        }
         binding.btStaticMap.setOnClickListener {
             btStaticMapOnClick()
         }
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         startActivity(intent)
     }
 
-    private fun btnAddressOnClick() {
+    private fun btAddressOnClick() {
         Thread {
             val encodedURL =
                 "https://maps.googleapis.com/maps/api/geocode/xml?latlng=${binding.tvLatitude.text},${binding.tvLongitude.text}&key=YOUR_API_KEY"
