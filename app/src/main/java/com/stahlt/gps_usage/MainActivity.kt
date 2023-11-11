@@ -69,16 +69,25 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     private fun btnAddressOnClick() {
-        Thread(Runnable {
+        Thread {
             val encodedURL =
                 "https://maps.googleapis.com/maps/api/geocode/xml?latlng=${binding.tvLatitude.text},${binding.tvLongitude.text}&key=YOUR_API_KEY"
             val url = URL(encodedURL)
             val urlConnection = url.openConnection()
 
-            val inputString = urlConnection.getInputStream()
+            val inputStream = urlConnection.getInputStream()
 
-            showAlert("R. Ituporanga, 365. 89222-430, Joinville - SC")
-        }).start()
+            val input = BufferedReader(InputStreamReader(inputStream))
+            val output = StringBuilder()
+
+            var row = input.readLine()
+            while (row != null) {
+                output.append(row)
+                row = input.readLine()
+            }
+
+            showAlert(output.toString())
+        }.start()
     }
 
     private fun showAlert(msg: String) {
